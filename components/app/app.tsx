@@ -21,16 +21,13 @@ function AppSetup() {
 }
 
 interface AppProps {
-  tokenServerId?: string;
-  tokenEndpoint: string;
   agentName?: string;
-  isVideoInputSupported: boolean;
 }
 
 export function App({ agentName }: AppProps) {
   const activeAgentName = agentName?.trim() || undefined;
 
-  // Custom TokenSource to read the LiveKit token from the WhatsApp URL parameter
+  // Use a custom TokenSource to read the token from the WhatsApp URL
   const tokenSource = useMemo(() => {
     return TokenSource.custom(async () => {
       const params = new URLSearchParams(window.location.search);
@@ -51,7 +48,7 @@ export function App({ agentName }: AppProps) {
     });
   }, []);
 
-  // Pass the tokenSource and agentName configuration into useSession
+  // Pass the required agentName configuration into useSession
   const session = useSession(tokenSource, {
     agentName: activeAgentName,
   });
@@ -60,7 +57,7 @@ export function App({ agentName }: AppProps) {
     <AgentSessionProvider session={session}>
       <AppSetup />
       <main className="grid h-svh grid-cols-1 place-content-center">
-        <ViewController isVideoInputSupported={isVideoInputSupported} />
+        <ViewController />
       </main>
       <StartAudioButton label="Start Audio" />
       <Toaster
