@@ -21,11 +21,25 @@ function AppSetup() {
 }
 
 interface AppProps {
+  tokenServerId?: string;
+  tokenEndpoint: string;
   agentName?: string;
+  isVideoInputSupported: boolean;
 }
 
+<<<<<<< HEAD
 export function App({ agentName }: AppProps) {
   const activeAgentName = agentName?.trim() || undefined;
+=======
+export function App({ tokenServerId, tokenEndpoint, agentName, isVideoInputSupported }: AppProps) {
+  const tokenSource = useMemo(
+    () =>
+      tokenServerId
+        ? TokenSource.developmentTokenServer(tokenServerId)
+        : TokenSource.endpoint(tokenEndpoint),
+    [tokenServerId, tokenEndpoint]
+  );
+>>>>>>> c5d78a6c381a0ac80b081cf6aeb8ac454d00ca78
 
   // Use a custom TokenSource to read the token from the WhatsApp URL
   const tokenSource = useMemo(() => {
@@ -57,7 +71,7 @@ export function App({ agentName }: AppProps) {
     <AgentSessionProvider session={session}>
       <AppSetup />
       <main className="grid h-svh grid-cols-1 place-content-center">
-        <ViewController />
+        <ViewController isVideoInputSupported={isVideoInputSupported} />
       </main>
       <StartAudioButton label="Start Audio" />
       <Toaster
