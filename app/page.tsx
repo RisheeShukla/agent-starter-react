@@ -1,4 +1,4 @@
-import { App } from '@/components/app/app';
+import { App } from '@/components/app/app.tsx';
 
 // Token source, in order of precedence: the LiveKit Cloud development token server
 // (LIVEKIT_TOKEN_SERVER_ID), the included token endpoint (LIVEKIT_URL, LIVEKIT_API_KEY,
