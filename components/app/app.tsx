@@ -27,10 +27,9 @@ interface AppProps {
   isVideoInputSupported: boolean;
 }
 
-<<<<<<< HEAD
+
 export function App({ agentName }: AppProps) {
   const activeAgentName = agentName?.trim() || undefined;
-=======
 export function App({ tokenServerId, tokenEndpoint, agentName, isVideoInputSupported }: AppProps) {
   const tokenSource = useMemo(
     () =>
@@ -39,7 +38,7 @@ export function App({ tokenServerId, tokenEndpoint, agentName, isVideoInputSuppo
         : TokenSource.endpoint(tokenEndpoint),
     [tokenServerId, tokenEndpoint]
   );
->>>>>>> c5d78a6c381a0ac80b081cf6aeb8ac454d00ca78
+
 
   // Use a custom TokenSource to read the token from the WhatsApp URL
   const tokenSource = useMemo(() => {
