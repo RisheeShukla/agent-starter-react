@@ -27,20 +27,10 @@ interface AppProps {
   isVideoInputSupported: boolean;
 }
 
-
 export function App({ agentName }: AppProps) {
   const activeAgentName = agentName?.trim() || undefined;
-export function App({ tokenServerId, tokenEndpoint, agentName, isVideoInputSupported }: AppProps) {
-  const tokenSource = useMemo(
-    () =>
-      tokenServerId
-        ? TokenSource.developmentTokenServer(tokenServerId)
-        : TokenSource.endpoint(tokenEndpoint),
-    [tokenServerId, tokenEndpoint]
-  );
 
-
-  // Use a custom TokenSource to read the token from the WhatsApp URL
+  // Custom TokenSource to read the LiveKit token from the WhatsApp URL parameter
   const tokenSource = useMemo(() => {
     return TokenSource.custom(async () => {
       const params = new URLSearchParams(window.location.search);
@@ -61,7 +51,7 @@ export function App({ tokenServerId, tokenEndpoint, agentName, isVideoInputSuppo
     });
   }, []);
 
-  // Pass the required agentName configuration into useSession
+  // Pass the tokenSource and agentName configuration into useSession
   const session = useSession(tokenSource, {
     agentName: activeAgentName,
   });
