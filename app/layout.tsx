@@ -53,8 +53,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
       )}
     >
       <head>
-        <title>LiveKit Voice Agent</title>
+        <title>Aniyor Voice Agent</title>
         <meta name="description" content="A voice agent built with LiveKit" />
+        <link rel="icon" href="/lk-aniyor.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/lk-aniyor.png" />
+        <meta name="theme-color" content="#ffffff" />
       </head>
       <body className="overflow-x-hidden">
         <ThemeProvider
@@ -63,33 +66,40 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <header className="fixed top-0 left-0 z-50 hidden w-full flex-row justify-between p-6 md:flex">
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://livekit.io"
-              className="scale-100 transition-transform duration-300 hover:scale-110"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/lk-logo.svg" alt="LiveKit Logo" className="block size-6 dark:hidden" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/lk-logo-dark.svg"
-                alt="LiveKit Logo"
-                className="hidden size-6 dark:block"
-              />
-            </a>
-            <span className="text-foreground font-mono text-xs font-bold tracking-wider uppercase">
-              Built with{' '}
+          <header className="fixed top-0 left-0 z-50 w-full px-4 py-3 sm:px-5 md:px-6 md:py-4">
+            <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://docs.livekit.io/agents"
-                className="underline underline-offset-4"
+                href="https://www.aniyor.net/"
+                className="inline-flex scale-100 items-center justify-center rounded-full p-1 transition-transform duration-300 hover:scale-110"
               >
-                LiveKit Agents
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/lk-aniyor.png"
+                  alt="Aniyor Logo"
+                  className="block size-10 rounded-full object-cover shadow-[0_0_18px_rgba(180,140,70,0.25)] sm:size-12 md:size-14 dark:hidden"
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/lk-aniyor.png"
+                  alt="Aniyor Logo"
+                  className="hidden size-10 rounded-full object-cover shadow-[0_0_18px_rgba(180,140,70,0.25)] sm:size-12 md:size-14 dark:block"
+                />
               </a>
-            </span>
+
+              <span className="text-foreground max-w-[60%] text-right font-mono text-[10px] font-bold tracking-wider uppercase text-amber-900/90 sm:text-xs md:text-sm dark:text-amber-100/90">
+                Buy{' '}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.aniyor.net/search?type=product&options%5Bprefix%5D=last&q=Products"
+                  className="underline underline-offset-4"
+                >
+                  Anyor Products
+                </a>
+              </span>
+            </div>
           </header>
 
           {children}

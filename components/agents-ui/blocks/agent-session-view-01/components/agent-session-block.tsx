@@ -79,6 +79,15 @@ const SHIMMER_MOTION_PROPS: MotionProps = {
   exit: 'hidden',
 };
 
+const RECOMMENDATION_MESSAGES = [
+  'What is Aniyor?',
+  'Tell me about [product/service name]',
+  'Tell me details about Order no [order number]',
+  'Tell me about refund policy',
+  'Tell me about shipping details',
+  'What is the return policy?',
+];
+
 interface FadeProps {
   top?: boolean;
   bottom?: boolean;
@@ -208,6 +217,28 @@ export function AgentSessionView_01({
       {...props}
     >
       <Fade top className="absolute inset-x-4 top-0 z-10 h-40" />
+
+      {!isChatOpen && (
+        <aside
+          aria-label="Conversation suggestions"
+          className="absolute top-1/2 left-3 z-20 hidden w-40 -translate-y-1/2 sm:block md:left-6"
+        >
+          <p className="mb-2 text-xl font-semibold tracking-wide text-muted-foreground uppercase">
+            Try asking
+          </p>
+          <div className="space-y-1.5">
+            {RECOMMENDATION_MESSAGES.map((message) => (
+              <div
+                key={message}
+                className="bg-background/75 border-border/500 rounded-lg border px-2.5 py-2 text-[11px] leading-tight text-black shadow-sm backdrop-blur-sm"
+              >
+                {message}
+              </div>
+            ))}
+          </div>
+        </aside>
+      )}
+
       {/* transcript */}
       <AnimatePresence>
         {isChatOpen && (

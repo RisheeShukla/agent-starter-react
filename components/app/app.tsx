@@ -10,14 +10,14 @@ import { ViewController } from '@/components/app/view-controller';
 import { Toaster } from '@/components/ui/sonner';
 import { useAgentErrors } from '@/hooks/useAgentErrors';
 import { useDebugMode } from '@/hooks/useDebug';
+import { ProductToastListener } from '@/components/ProductToastListener'; 
 
 const IN_DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
 function AppSetup() {
   useDebugMode({ enabled: IN_DEVELOPMENT });
   useAgentErrors();
-
-  return null;
+  return <ProductToastListener />;
 }
 
 interface AppProps {
@@ -25,9 +25,33 @@ interface AppProps {
 }
 
 export function App({ agentName }: AppProps) {
-  const tokenSource = useMemo(() => TokenSource.endpoint('/api/token'), []);
+  const activeAgentName = agentName?.trim() || undefined;
 
-  const session = useSession(tokenSource, agentName ? { agentName } : undefined);
+  // Use a custom TokenSource to read the token from the WhatsApp URL
+  const tokenSource = useMemo(() => {
+    return TokenSource.custom(async () => {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      const serverUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL || "";
+
+      if (!token) {
+        throw new Error('No token found in URL parameters.');
+      }
+      if (!serverUrl) {
+        throw new Error('No LiveKit server URL configured.');
+      }
+
+      return {
+        serverUrl,
+        participantToken: token,
+      };
+    });
+  }, []);
+
+  // Pass the required agentName configuration into useSession
+  const session = useSession(tokenSource, {
+    agentName: activeAgentName,
+  });
 
   return (
     <AgentSessionProvider session={session}>
@@ -40,7 +64,10 @@ export function App({ agentName }: AppProps) {
         icons={{
           warning: <WarningIcon weight="bold" />,
         }}
-        position="top-center"
+        position="top-right"
+        duration={15000}
+        gap={12}
+        offset={16}
         className="toaster group"
         style={
           {

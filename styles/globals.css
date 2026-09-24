@@ -6,7 +6,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(87.159% 0.07258 42.966);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -120,7 +120,15 @@
   * {
     @apply border-foreground/20 outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.14)),
+      var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 }

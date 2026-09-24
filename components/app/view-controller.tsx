@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSessionContext } from '@livekit/components-react';
@@ -30,11 +31,25 @@ const VIEW_MOTION_PROPS = {
 export function ViewController() {
   const { isConnected, start } = useSessionContext();
   const { resolvedTheme } = useTheme();
+  const [hasToken, setHasToken] = useState(false);
+  const [autoStartFailed, setAutoStartFailed] = useState(false);
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('token');
+    if (!token) return;
+
+    setHasToken(true);
+
+    void start().catch((error) => {
+      console.error('Failed to start LiveKit session:', error);
+      setAutoStartFailed(true);
+    });
+  }, [start]);
 
   return (
     <AnimatePresence mode="wait">
       {/* Welcome view */}
-      {!isConnected && (
+      {!isConnected && (!hasToken || autoStartFailed) && (
         <MotionWelcomeView
           key="welcome"
           {...VIEW_MOTION_PROPS}

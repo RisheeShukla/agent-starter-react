@@ -29,37 +29,42 @@ export const WelcomeView = ({
   ref,
 }: React.ComponentProps<'div'> & WelcomeViewProps) => {
   return (
-    <div ref={ref}>
-      <section className="bg-background flex flex-col items-center justify-center text-center">
-        <WelcomeImage />
+    <div ref={ref} className="min-h-screen">
+      <section className="bg-background flex min-h-screen w-full flex-col items-center justify-center px-6 pb-16 pt-20 text-center sm:px-8 md:pt-24">
+        <div className="flex w-full max-w-md flex-col items-center justify-center">
+          <WelcomeImage />
 
-        <p className="text-foreground max-w-prose pt-1 leading-6 font-medium">
-          Chat live with your voice AI agent
-        </p>
+          <p className="text-foreground max-w-prose text-base leading-6 font-medium sm:text-lg md:text-xl">
+            Chat live with your voice AI agent
+          </p>
 
-        <Button
-          size="lg"
-          onClick={onStartCall}
-          className="mt-6 w-64 rounded-full font-mono text-xs font-bold tracking-wider uppercase"
-        >
-          {startButtonText}
-        </Button>
+          <div
+  className="group relative mt-6 inline-flex w-full max-w-md items-center justify-center gap-3 overflow-hidden rounded-full border border-yellow-600 bg-yellow-50 px-8 py-4 font-mono text-sm font-bold uppercase tracking-widest text-primary backdrop-blur-md transition-all duration-300 sm:text-base"
+>
+  {/* Larger pulsing indicator dot */}
+  <span className="flex h-3 w-3 rounded-full bg-yellow-600 animate-pulse" />
+  
+  <span className='text-yellow-600'>Welcome to Aniyor</span>
+</div>
+        </div>
+
+        <div className="mt-10 flex flex-col w-full items-center justify-center px-4 text-center">
+          <p className="text-muted-foreground max-w-prose text-[11px] leading-5 font-normal text-pretty sm:text-xs md:text-sm">
+            Visit our site for shopping{' '}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.aniyor.net/"
+              className="underline underline-offset-2"
+            >
+              Aniyor Store
+            </a>
+            .
+          </p>
+          <p className='mt-9 text-xl text-red-500'>If you are seeing this screen your token is expired.</p>
+          <p className='mt-2 text-xl text-red-500'>Sorry, you can talk to the agent only for five minutes.</p>
+        </div>
       </section>
-
-      <div className="fixed bottom-5 left-0 flex w-full items-center justify-center">
-        <p className="text-muted-foreground max-w-prose pt-1 text-xs leading-5 font-normal text-pretty md:text-sm">
-          Need help getting set up? Check out the{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://docs.livekit.io/agents/start/voice-ai/"
-            className="underline"
-          >
-            Voice AI quickstart
-          </a>
-          .
-        </p>
-      </div>
     </div>
   );
 };
